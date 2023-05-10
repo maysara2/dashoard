@@ -7,7 +7,7 @@
                     <div class="card">
                       <div class="card-body">
                         <h4 class="card-title">Services Records</h4>
-                        <a href="{{ route('admin.servies.create')}}">
+                        <a href="{{ route('admin.servies.create') }}">
                         <button type="button" class="btn btn-primary btn-fw ">Add New</button>
                         </a>
                         {{-- <p class="card-description"></code> --}}
@@ -23,21 +23,21 @@
                             </tr>
                           </thead>
                           <tbody>
-                            {{--  @foreach ($services as $service)  --}}
+                            @foreach ($services as $service)
                             <tr>
-                              <td>  id  </td>
-                              <td> <i class="icon" ></i></td>
-                              {{-- <td> <i class="fab  icon }}"  aria-hidden="true"></i></td> --}}
-                              <td>  name </td>
+                              <td> {{ $service -> id }} </td>
+                              <td> <i class="{{$service -> icon}}" ></i></td>
+                              {{-- <td> <i class="fab {{ $service -> icon }}"  aria-hidden="true"></i></td> --}}
+                              <td> {{ $service -> name }} </td>
                               <td>
                                 <p class="text-wrap">
-                                   description
+                                  {{ $service -> description }}
                                 </p>
                                 {{-- {{ substr($service -> description,0,30) }}  ... --}}
                                 </td>
                               <td>
-                                <button type="button" class="btn btn-success btn-sm me-1 " onclick="location.href='{{ route('admin.index') }}';">Edit</button>
-                                  <form type="submit" method="POST" style="display: inline" action="{{ route('admin.index')}}" onsubmit="return confirm('Are you sure?')">
+                                <button type="button" class="btn btn-success btn-sm me-1 " onclick="location.href='{{ route('admin.servies.edit',$service->id) }}';">Edit</button>
+                                  <form type="submit" method="POST" style="display: inline" action="{{ route('admin.servies.destroy', $service->id)}}" onsubmit="return confirm('Are you sure?')">
                                     @csrf
                                     @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" style="style="display: inline"">Delete</button>
@@ -45,7 +45,7 @@
                             </td>
                             </tr>
                             <tr>
-                                {{--  @endforeach  --}}
+                                @endforeach
                           </tbody>
                         </table>
                       </div>

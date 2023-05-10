@@ -24,22 +24,22 @@
                             </tr>
                           </thead>
                           <tbody>
-                            {{--  @foreach ($reviews as $review)  --}}
+                            @foreach ($reviews as $review)
                             <tr>
-                              <td>  id  </td>
-                              <td> <img src="{{ asset('import/assets/admin/fonts/Ubuntu/Ubuntu-Medium.woff') }}" alt="image"> </td>
-                              {{-- <td> <i class="fab {{ $service -> icon }}"  aria-hidden="true"></i></td> --}}
-                              <td>  name  </td>
-                              <td> job  </td>
+                              <td> {{ $review -> id }} </td>
+                              <td><img width="80%" src="{{ asset('uploads/reviews/'.$review->image) }}" alt=""></td>
+                              {{--  <td> <i class="fab {{ $service -> icon }}"  aria-hidden="true"></i></td>  --}}
+                              <td> {{ $review -> name }} </td>
+                              <td> {{ $review -> job }} </td>
                               <td>
                                 <p class="text-wrap">
-                                   description
+                                  {{ $review -> description }}
                                 </p>
                                 {{-- {{ substr($service -> description,0,30) }}  ... --}}
                                 </td>
                               <td>
-                                <button type="button" class="btn btn-success btn-sm me-1 " onclick="location.href="{{ route('admin.index') }}">Edit</button>
-                                  <form type="submit" method="POST" style="display: inline" action="{{ route('admin.index')}}" onsubmit="return confirm('Are you sure?')">
+                                <button type="button" class="btn btn-success btn-sm me-1 " onclick="location.href='{{ route('admin.review.edit', $review->id) }}';">Edit</button>
+                                  <form type="submit" method="POST" style="display: inline" action="{{ route('admin.review.destroy', $review->id)}}" onsubmit="return confirm('Are you sure?')">
                                     @csrf
                                     @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" style="style="display: inline"">Delete</button>
@@ -47,7 +47,7 @@
                             </td>
                             </tr>
                             <tr>
-                                {{--  @endforeach  --}}
+                                @endforeach
                           </tbody>
                         </table>
                       </div>

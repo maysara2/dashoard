@@ -41,9 +41,9 @@
           </a>
           <div class="collapse" id="ui-qualification">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="#">{{ __('admin.xx') }}</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">{{ __('admin.zz') }}</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#"> {{ __('admin.alls') }}</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('admin.qualification.edu') }}">{{ __('admin.xx') }}</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('admin.qualification.exp') }}">{{ __('admin.zz') }}</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('admin.qualification.index') }}"> {{ __('admin.alls') }}</a></li>
             </ul>
           </div>
           @endif
@@ -87,8 +87,8 @@
 
           <div class="collapse" id="ui-portfolio">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="#">{{ __('admin.cat') }}</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">{{ __('admin.por') }}</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('admin.category.index') }}">{{ __('admin.cat') }}</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('admin.portfolio.index') }}">{{ __('admin.por') }}</a></li>
             </ul>
           </div>
         </li>

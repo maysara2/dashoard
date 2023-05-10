@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ReviewController extends Controller
 {
@@ -11,17 +15,18 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        // $reviews = Review::all();
-        // return view('admin.review.index',compact('reviews'));
-        return view('admin.review.index');
+        $reviews=Review::all();
+
+
+        return view('admin.review.index',compact('reviews'));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
+    /**   * Show the form for creating a new resource.
      */
     public function create()
     {
-        //  return view('admin.review.create');
+        return view('admin.review.create');
     }
 
     /**
@@ -29,25 +34,25 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'name' => 'required|min:4',
-        //     'job' => 'required',
-        //     'description' => 'required|min:10|max:255',
-        //     'image' => 'image|mimes:jpeg,png,jpg|max:2048'
-        // ]);
+        $request->validate([
+            'name' => 'required|min:4',
+            'job' => 'required',
+            'description' => 'required|min:10|max:255',
+            'image' => 'required|image|mimes:png,jpg,jpeg,svg,gif',
+        ]);
+        $img = $request->file('image');
+        $img_name = rand(). time().$img->getClientOriginalName();
+        $img->move(public_path('uploads/reviews'), $img_name);
 
-        // $review = new Review();
-        // $review->name = $validated['name'];
-        // $review->job = $validated['job'];
-        // $review->description = $validated['description'];
+        Review::create([
+            'name'=>$request->name,
+            'job'=>$request->job,
+            'description'=>$request->description,
+            'image'=>$img_name,
 
-        // if($request->hasfile('image')){
-        //     $get_file = $request->file('image')->store('images/reviewers');
-        //     $review->image = $get_file;
-        // }
+        ]);
 
-        // $review->save();
-        // return to_route('admin.review.index')->with('message','Review Added');
+        return redirect()->route('admin.review.index')->with('message','Review Added');
     }
 
     /**
@@ -61,50 +66,54 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Review $review)
     {
-        // لازم اغير الid الي review
-        //return view('admin.review.edit', compact('review'));
+        return view('admin.review.edit',compact('review'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        // $validated = $request->validate([
-        //     'name' => 'required|min:4',
-        //     'job' => 'required',
-        //     'description' => 'required|min:10|max:255',
-        //     'image' => 'image|mimes:jpeg,png,jpg|max:2048'
-        // ]);
+        $request->validate([
+            'name' => 'required|min:4',
+            'job' => 'required',
+            'description' => 'required|min:10|max:255',
+            'image' => 'required|image|mimes:png,jpg,jpeg,svg,gif'
+        ]);
 
-        // $review->name = $validated['name'];
-        // $review->job = $validated['job'];
-        // $review->description = $validated['description'];
+        $review=Review::findOrFail($id);
 
-        // if($request->hasfile('image')){
-        //     if($review->image != null ){
-        //     Storage::delete($review->image);
-        //     }
-        //     $get_new_file = $request->file('image')->store('images/reviewers');
-        //     $review->image = $get_new_file;
-        // }
-
-        // $review->update();
-        // return to_route('admin.review.index')->with('message','Review Updated');
+       // Upload Images
+       $img_name = $review->image;
+       if($request->hasFile('image')) {
+           File::delete(public_path('uploads/reviews/'.$review->image));
+           $img = $request->file('image');
+           $img_name = rand().time().$img->getClientOriginalName();
+           $img->move(public_path('uploads/reviews/'), $img_name);
+       }
+        $review->update([
+            'name'=>$request->name,
+            'job'=>$request->job,
+            'description'=>$request->description,
+            'image'=>$img_name,
+        ]);
+        return redirect()->route('admin.review.index')->with('message','Review Updated');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
      {
-    //     if($review->image != null){
-    //         Storage::delete($review->image);
-    //     }
-    //     $review -> delete();
-    //     return back()->with('message', 'Review Deleted');
+        // if($review->image != null){
+        //     Storage::delete($review->image);
+        // }
+        $review=Review::findOrFail($id);
+        File::delete(public_path('uploads/reviews/'.$review->image));
+        $review -> delete();
+        return back()->with('message', 'Review Deleted');
      }
 }

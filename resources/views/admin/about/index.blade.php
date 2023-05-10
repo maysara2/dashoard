@@ -17,7 +17,7 @@
                 </ul>
             </div>
              @endif
-            <form class="forms-sample" method="POST" action="#" enctype="multipart/form-data">
+            <form class="forms-sample" method="POST" action="{{ route('admin.about.update', $user->id) }}" enctype="multipart/form-data">
               @csrf
               @method('PUT')
               <p class="card-description"> Personal info </p>
@@ -26,7 +26,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Name</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="name" value="name"/>
+                      <input type="text" class="form-control" name="name" value="{{$user->name}}"/>
                     </div>
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="email" value="Email"/>
+                      <input type="text" class="form-control" name="email" value="{{$user->email}}"/>
                     </div>
                   </div>
                 </div>
@@ -44,7 +44,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Phone</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="phone" value="phone"/>
+                      <input type="text" class="form-control" name="phone" value="{{$user->phone}}"/>
                     </div>
                   </div>
                 </div>
@@ -52,7 +52,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Address</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="address" value="Address"/>
+                      <input type="text" class="form-control" name="address" value="{{$user->address}}"/>
                     </div>
                   </div>
                 </div>
@@ -62,7 +62,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Job</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="job" value="Job"/>
+                      <input type="text" class="form-control" name="job" value="{{$user->job}}"/>
                     </div>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Degree</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="degree" value="Degree" />
+                      <input type="text" class="form-control" name="degree" value="{{$user->degree}}" />
                     </div>
                   </div>
                 </div>
@@ -80,7 +80,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Experience</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="experience" value="experience}}"/>
+                      <input type="text" class="form-control" name="experience" value="{{$user->experience}}"/>
                     </div>
                   </div>
                 </div>
@@ -88,7 +88,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Birth Day</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" name="birth_day" value="birth_day}}" />
+                      <input type="text" class="form-control" name="birth_day" value="{{ $user->birth_day}}" />
                     </div>
                   </div>
                 </div>
